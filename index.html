@@ -1,0 +1,28 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebPar</title>
+</head>
+<body>
+    <h1>Welcome to WebPar</h1>
+    <button onclick="startScreenShare()">Start Screen Share</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+        function startScreenShare() {
+            // Your screen sharing logic here using JavaScript
+            // Example: Get a screenshot using a library like html2canvas
+            html2canvas(document.body).then(canvas => {
+                var screenshotData = canvas.toDataURL('image/png');
+                
+                // Emit a 'screenshot' event to the server with the data
+                socket.emit('screenshot', { data: screenshotData });
+            });
+        }
+    </script>
+</body>
+</html>
